@@ -23,6 +23,9 @@ $(document).ready(function () {
 
     var num_array = num.toString().split('').reverse(); // reversing allows support up to $999,999
 
+    // // zero is a special case
+    // if (Math.floor(num) === 0) { return 'zero dollars and '; }
+
     if (num_array.length > 3) { // dealing with thousands
       result = numberInWords(Math.floor(num/1000)) + ' thousand';
       result = result + numberInWords(num%1000);
@@ -30,7 +33,7 @@ $(document).ready(function () {
     if (num_array.length === 3) { // dealing with hundreds
       result = result + ' ' + numberInWords(num_array[2]) + ' hundred ';
       if (num%100 === 0) { // even hundreds.
-        result = result + ' even and ';
+        result = result;
       } else {
         result = result + ' ' + numberInWords(num%100);
       }
@@ -39,14 +42,12 @@ $(document).ready(function () {
       // teens are a special case.
       if (10 < num && num < 20) { return teens[num%10]; }
       if (num%10 === 0) { // even 10s
-        return tens[Math.floor(num/10)] + ' even and ';
+        return tens[Math.floor(num/10)];
       } else {
         return tens[Math.floor(num/10)] + numberInWords(num%10);
       }
     }
     if (num_array.length === 1) { // dealing with single digits
-      // zero is a special case
-      if (num_array[0] === '0') { return 'zero dollars and '; }
       return ' ' + digits[num];
     }
 
